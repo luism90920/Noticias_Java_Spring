@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org" xmlns:sec="http:/www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Noticias</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div class="container m-5">
+        <table class="table table-success table-striped">
+            <thead align="center">
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Cuerpo</th>
+                    <th scope="col"></th>
+                    <th scope="col">Periodista</th>
+                    <th colspan="3" scope="col">Acción</th>
+
+                </tr>
+            </thead>
+            <!-- Hacemos la iteración dentro de la etiqueta "tbody" -->
+            <tbody align="center" style="vertical-align: middle;" th:each="noticia : ${noticias}">
+                <tr>
+                    <td scope="row" th:text="${noticia.titulo}"></td>
+                    <td th:text="${noticia.cuerpo}"></td>
+                    <td>
+                        <img th:src="@{/imagen/noticia/__${noticia.id}__}" alt="">
+                    </td>
+                    <td th:text="${noticia.periodista.nombre}"></td>
+                    <td>
+                        <a th:href="@{/noticia/mostrar/__${noticia.id}__}">Ver</a>
+                    </td>
+                    <td sec:authorize="hasAnyRole('SUPERADMIN', 'ADMIN')">
+                        <a th:href="@{/noticia/modificar/__${noticia.id}__}">Modificar</a>
+                    </td>
+                    <td sec:authorize="hasAnyRole('SUPERADMIN', 'ADMIN')">
+                        <a th:href="@{/noticia/eliminar/__${noticia.id}__}">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <a th:href="@{/inicio}">
+            <button type="button" class="btn btn-primary">Volver</button>
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

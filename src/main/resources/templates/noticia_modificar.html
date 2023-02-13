@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns: th="http:/www.thymeleaf.org" xmlns:sec="http:/www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+
+    <div class="text-center">
+        <div class="container">
+            <h2>Modificá la noticia aqui!!</h2>
+        </div>
+    </div>
+
+    <div class="text-center">
+
+        <div class="container">
+            <form class="formulario" th:action="@{/noticia/modificar/__${noticia.id}__}" method="post"
+                enctype="multipart/form-data">
+
+                <!-- DATOS A COMPLETAR EN EL FORMULARIO -->
+
+                <input hidden th:value="${noticia.id}" name="id">
+
+                <div class="form-group my-3">
+                    <!-- el nombre del atributo name tiene que coincidir con el nombre que llega como parámetro al controlador -->
+                    <input th:value="${noticia.titulo}" type="text" name="titulo" placeholder="Título de la noticia"
+                        class="form-group">
+                </div>
+                <div class="form-group">
+                    <input th:value="${noticia.cuerpo}" type="text" name="cuerpo" placeholder="Cuerpos de la noticia"
+                        class="form-group">
+                </div>
+                <br>
+                <div class="form-group">
+                    <select name="idPeriodista">
+                        <option th:text="${noticia.periodista.nombre}" th:value="${noticia.periodista.dni}" />
+
+                        <option th:each="periodista : ${periodistas}" th:value="${periodista.dni}"
+                            th:text="${periodista.nombre}" />
+                    </select>
+                </div>
+                <br>
+                <div class="form-group my-3">
+                    <input type="file" name="archivo" class="form-group">
+                </div>
+
+                <br>
+                <button type="submit" class="btn btn-primary">Modificar</button>
+
+            </form>
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

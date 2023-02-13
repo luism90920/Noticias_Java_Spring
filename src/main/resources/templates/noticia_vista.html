@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http:/www.thymeleaf.org" xmlns:sec="http:/www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div class="text-center">
+        <h1 th:text="${noticia.titulo}"></h1>
+        <img th:src="@{/imagen/noticia/__${noticia.id}__}" alt="">
+
+        <p th:text="${noticia.cuerpo}"></p>
+
+    </div>
+
+    <h6 th:text="'Periodista: ' + ${ noticia.periodista.nombre}"></h6>
+
+
+    <div class="text-center">
+        <a th:href="@{/noticia/lista}">
+            <button th:href="@{noticia/lista}" type="button" class="btn btn-primary">Volver</button>
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
