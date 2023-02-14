@@ -30,7 +30,7 @@
             <!-- Hacemos la iteración dentro de la etiqueta "tbody" -->
             <tbody align="center" style="vertical-align: middle;" th:each="noticia : ${noticias}">
                 <tr>
-                    <td scope="row" th:text="${noticia.titulo}"></td>
+                    <td  scope="row" th:text="${noticia.titulo}"></td>
                     <td th:text="${noticia.cuerpo}"></td>
                     <td>
                         <img th:src="@{/imagen/noticia/__${noticia.id}__}" alt="">
@@ -42,7 +42,7 @@
                     <td sec:authorize="hasAnyRole('SUPERADMIN', 'ADMIN')">
                         <a th:href="@{/noticia/modificar/__${noticia.id}__}">Modificar</a>
                     </td>
-                    <td sec:authorize="hasAnyRole('SUPERADMIN', 'ADMIN')">
+                    <td sec:authorize="hasAnyRole('SUPERADMIN')">
                         <a th:href="@{/noticia/eliminar/__${noticia.id}__}">Eliminar</a>
                     </td>
                 </tr>

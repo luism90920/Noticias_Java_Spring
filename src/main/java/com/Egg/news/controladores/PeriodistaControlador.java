@@ -37,12 +37,13 @@ public class PeriodistaControlador {
 
         try {
             periodistaServicio.crearPeriodista(dni, nombre, password, password2);
+            
             modelo.put("exito", "El periodista fue registrado correctamente");
-            return "inicio.html";
+            return "panel.html";
 
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
-            return "usuario_periodista.html";
+            return "periodista_registro.html";
         }
     }
     

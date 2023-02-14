@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +34,7 @@ public class PeriodistaServicio implements UserDetailsService {
 
         periodista.setDni(dni);
         periodista.setNombre(nombre);
-        periodista.setPassword(password);
+        periodista.setPassword(new BCryptPasswordEncoder().encode(password));
         periodista.setRol(Rol.ADMIN);
         periodista.setAlta(new Date());
         periodista.setActivo(Boolean.TRUE);
