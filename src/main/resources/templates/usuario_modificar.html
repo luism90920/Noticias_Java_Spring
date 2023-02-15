@@ -8,34 +8,51 @@
     <title>Modificar Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 
 <body>
 
     <nav th:replace="/fragments/navbar :: nav"></nav>
-
-    <header>
+    <br>
+    <div class="text-center">
         <div class="container">
             <h2>Modifique Usuario aquí!!</h2>
         </div>
         <br>
-    </header>
-    <div class="container">
-        <!-- El "action" apunta a /periodista/modificar y también le tengo que pasar el id 
-        para que sepa qué periodista modificar, sería una variable de preprocesamiento -->
-        <form th:action="@{/usuario/modificar/__${usuario.dni}__}" method="post">
 
-            <!-- va a existir un input de "id" pero no lo vamos a ver (por eso tiene "hidden") ya 
-                que no lo queremos modificar -->
-            <input hidden th:value="${usuario.dni}" name="dni">
-            
-            <br>
-            <div class="form-group">
-                <input th:value="${usuario.nombre}" type="text" class="form-group" name="nombre" placeholder="Nombre del Periodista">
-            </div>
-            <br>
-            <button type="submit" class="btn btn-primary">Actualizar</button>
-        </form>
+        <div class="container">
+            <!-- El "action" apunta a /periodista/modificar y también le tengo que pasar el id 
+            para que sepa qué periodista modificar, sería una variable de preprocesamiento -->
+            <form th:action="@{/usuario/modificar/__${usuario.dni}__}" method="post">
+
+                <!-- va a existir un input de "id" pero no lo vamos a ver (por eso tiene "hidden") ya 
+                    que no lo queremos modificar -->
+                <input hidden th:value="${usuario.dni}" name="dni">
+                <div>
+                    <div><label for="">Contraseña:</label></div>
+                    <input type="password" th:value="${usuario.password}" name="password" class="form-group">
+                </div>
+                <br>
+                <div>
+                    <div>
+                        <label for="">Repetir-Contraseña:</label>
+                    </div>
+                    <input type="password" th:value="${usuario.password}" name="password2" class="form-group">
+                </div>
+                <br>
+                <div class="form-group">
+                    <div>
+                        <label for="">Nombre</label>
+                    </div>
+                    <input th:value="${usuario.nombre}" type="text" class="form-group" name="nombre"
+                        placeholder="Nombre del Periodista">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+
     </div>
 
 

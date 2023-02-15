@@ -61,7 +61,7 @@ public class PeriodistaControlador {
     @PreAuthorize("hasAnyRole('ROLE_SUPERADMIN')")
     @GetMapping("/modificar/{dni}")
     public String modificar(@PathVariable Integer dni, ModelMap modelo) {
-        modelo.put("periodista", periodistaServicio.getone(dni));
+        modelo.addAttribute("periodista", periodistaServicio.getone(dni));
         return "periodista_modificar.html";
     }
 

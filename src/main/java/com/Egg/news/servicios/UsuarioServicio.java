@@ -51,7 +51,8 @@ public class UsuarioServicio implements UserDetailsService {
         List<Usuario> usuarios = new ArrayList();
 
         usuarios = usuarioRepositorio.findAll();
-
+        
+       
         return usuarios;
     }
 
@@ -63,8 +64,8 @@ public class UsuarioServicio implements UserDetailsService {
         Optional<Usuario> respuesta = usuarioRepositorio.findById(dni);
 
         if (respuesta.isPresent()) {
-
-            Usuario usuario = new Usuario();
+            
+            Usuario usuario = respuesta.get();
 
             usuario.setNombre(nombre);
 
@@ -102,34 +103,30 @@ public class UsuarioServicio implements UserDetailsService {
         Usuario usuario = usuarioRepositorio
                 .buscarPorNombre(nombre);
 
-        
+        if (usuario != null) {
 
-        
-        if(usuario != null){
-             
             List<GrantedAuthority> permisos = new ArrayList();
 
-        GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString());
 
-        permisos.add(p);
+            permisos.add(p);
 
-        
-        //Captamos la información del usuario que ya está logeado, esto nos sirve para mostrar las vistas 
-        //de acuerdo al usuario logeado
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession(true);
-        
-        session.setAttribute("usuariosession", usuario);
-        
-        //Lo transformamos es un usario del dominio Spring
-        //El constructor de user nos pide un username, una contraseña y una lista de permisos
-        return new User(usuario.getNombre(), usuario.getPassword(), permisos);
-            
-        }else{
-            
-            return null;            
+            //Captamos la información del usuario que ya está logeado, esto nos sirve para mostrar las vistas 
+            //de acuerdo al usuario logeado
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("usuariosession", usuario);
+
+            //Lo transformamos es un usario del dominio Spring
+            //El constructor de user nos pide un username, una contraseña y una lista de permisos
+            return new User(usuario.getNombre(), usuario.getPassword(), permisos);
+
+        } else {
+
+            return null;
         }
-         
+
     }
 
 }

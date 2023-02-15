@@ -20,7 +20,7 @@ public class Usuario {
     private String password;
     
     @Enumerated(EnumType.STRING)
-    private Rol rol;
+    public Rol rol;
     
     private Boolean activo;
     
