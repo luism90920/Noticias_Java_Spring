@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PeriodistaRepositorio extends JpaRepository<Periodista, Integer> {
     
-    @Query("SELECT p FROM Periodista p WHERE p.nombre = : nombre")
-    public Periodista buscarPorNombre(@Param("nombre")String nombre);
+    @Query("SELECT p FROM Periodista p WHERE p.mail = : mail")
+    public Periodista buscarPorNombre(@Param("mail")String mail);
 }

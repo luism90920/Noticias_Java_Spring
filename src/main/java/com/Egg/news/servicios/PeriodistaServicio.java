@@ -26,14 +26,15 @@ public class PeriodistaServicio implements UserDetailsService {
     private PeriodistaRepositorio periodistaRepositorio;
 
     @Transactional
-    public void crearPeriodista(Integer dni, String nombre, String password, String password2) throws MiException {
+    public void crearPeriodista(Integer dni, String nombre, String mail, String password, String password2) throws MiException {
 
-        validar(dni, nombre, password, password2);
+        validar(dni, nombre, mail, password, password2);
 
         Periodista periodista = new Periodista();
 
         periodista.setDni(dni);
         periodista.setNombre(nombre);
+        periodista.setMail(mail);
         periodista.setPassword(new BCryptPasswordEncoder().encode(password));
         periodista.setRol(Rol.ADMIN);
         periodista.setAlta(new Date());
@@ -52,9 +53,9 @@ public class PeriodistaServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarPeriodista(Integer dni, String nombre, String password, String password2) throws MiException {
+    public void modificarPeriodista(Integer dni, String nombre, String mail, String password, String password2) throws MiException {
 
-        validar(dni, nombre, password, password2);
+        validar(dni, nombre, mail, password, password2);
 
         Optional<Periodista> respuesta = periodistaRepositorio.findById(dni);
 
@@ -73,13 +74,17 @@ public class PeriodistaServicio implements UserDetailsService {
         return periodistaRepositorio.getOne(dni);
     }
 
-    public void validar(Integer dni, String nombre, String password, String password2) throws MiException {
+    public void validar(Integer dni, String nombre, String mail, String password, String password2) throws MiException {
         if (dni == null) {
             throw new MiException("El dni no puede ser nulo");
         }
 
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni estar vacio");
+        }
+        
+        if (mail == null || mail.isEmpty()) {
+            throw new MiException("El mail no puede ser nulo ni estar vacio");
         }
 
         if (password == null || password.isEmpty() || password.length() <= 5) {
@@ -92,9 +97,9 @@ public class PeriodistaServicio implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String nombre) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
-        Periodista periodista = periodistaRepositorio.buscarPorNombre(nombre);
+        Periodista periodista = periodistaRepositorio.buscarPorNombre(mail);
 
         if(periodista != null){
              
@@ -106,7 +111,7 @@ public class PeriodistaServicio implements UserDetailsService {
         
             //Lo transformamos es un usario del dominio Spring
             //El constructor de user nos pide un username, una contraseña y una lista de permisos
-            return new User(periodista.getNombre(), periodista.getPassword(), permisos);
+            return new User(periodista.getMail(), periodista.getPassword(), permisos);
         }else{
             
             return null;            

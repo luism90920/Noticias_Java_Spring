@@ -20,14 +20,16 @@
             <thead align="center">
                 <tr>
                     <th scope="col">Id Periodista</th>
+                    <th scope="col">Rol</th>
                     <th scope="col">Nombre del periodista</th>
                     <th scope="col">Acción</th>
                 </tr>
             </thead>
             <!-- Hacemos la iteración dentro de la etiqueta "tbody" -->
             <tbody align="center" th:each="periodista : ${periodistas}">
-                <tr>
+                <tr th:if="${periodista.rol.name() == 'ADMIN'}"></tr>
                     <td scope="row" th:text="${periodista.dni}"></td>
+                    <td th:text="${periodista.rol}"></td>
                     <td th:text="${periodista.nombre}"></td>
                     <td>
                         <a th:href="@{/periodista/modificar/__${periodista.dni}__}">Modificar</a>

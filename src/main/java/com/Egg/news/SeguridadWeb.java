@@ -33,7 +33,7 @@ public class SeguridadWeb {
                 .formLogin((form) -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/logincheck")
-                .usernameParameter("nombre")
+                .usernameParameter("mail")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/inicio")
                 .permitAll()

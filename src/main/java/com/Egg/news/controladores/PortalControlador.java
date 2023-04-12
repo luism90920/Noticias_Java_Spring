@@ -42,12 +42,13 @@ public class PortalControlador {
     @PostMapping("/registro")
     public String registro(@RequestParam(required = false) Integer dni,
             @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String mail,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String password2,
             ModelMap modelo) {
 
         try {
-            usuarioServicio.crearUsuario(dni, nombre, password, password2);
+            usuarioServicio.crearUsuario(dni, nombre, mail, password, password2);
             modelo.put("exito", "El usuario fue registrado correctamente");
             return "index.html";
 

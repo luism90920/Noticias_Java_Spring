@@ -14,11 +14,16 @@
 <body>
 
     <nav th:replace="/fragments/navbar :: nav"></nav>
-
-    <div class="px-4 py-5 my-5 text-center">
+    <div class="hero">
+        <div></div>
+        <div class="hero-logo">
+            <h1></h1>
+        </div>
+    </div>
+    <!-- <div class="px-4 py-5 my-5 text-center">
         <h1 class="display-5 fw-bold">Bienvenidos a Noticias "Hola Mundo"</h1>
     </div>
-
+ -->
     <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensaje">
         <div class="card-body">
             <h5 class="card-tittle">Exito!</h5>

@@ -8,9 +8,13 @@ import java.util.Date;
 @Entity
 public class Administrador extends Periodista {
 
+    public Administrador() {
+    }
+
     
-    public Administrador(Integer sueldoMensual, Integer dni, String nombre, String password, Rol rol, Boolean activo, Date alta) {
-        super(sueldoMensual, dni, nombre, password, rol, activo, alta);
+    
+    public Administrador(Integer sueldoMensual, Integer dni, String nombre, String mail, String password, Rol rol, Boolean activo, Date alta) {
+        super(sueldoMensual, dni, nombre, mail, password, rol, activo, alta);
     }
     
     

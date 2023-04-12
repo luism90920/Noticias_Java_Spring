@@ -30,14 +30,15 @@ public class UsuarioServicio implements UserDetailsService {
 
     //new BCryptPasswordEncoder().encode(password)
     @Transactional
-    public void crearUsuario(Integer dni, String nombre, String password, String password2) throws MiException {
+    public void crearUsuario(Integer dni, String nombre, String mail, String password, String password2) throws MiException {
 
-        validar(dni, nombre, password, password2);
+        validar(dni, nombre, mail, password, password2);
 
         Usuario usuario = new Usuario();
 
         usuario.setDni(dni);
         usuario.setNombre(nombre);
+        usuario.setMail(mail);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setRol(Rol.USER);
         usuario.setAlta(new Date());
@@ -57,9 +58,9 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarUsuario(Integer dni, String nombre, String password, String password2) throws MiException {
+    public void modificarUsuario(Integer dni, String nombre, String mail, String password, String password2) throws MiException {
 
-        validar(dni, nombre, password, password2);
+        validar(dni, nombre, mail, password, password2);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(dni);
 
@@ -77,13 +78,17 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.getOne(dni);
     }
 
-    public void validar(Integer dni, String nombre, String password, String password2) throws MiException {
+    public void validar(Integer dni, String nombre, String mail, String password, String password2) throws MiException {
         if (dni == null) {
             throw new MiException("El dni no puede ser nulo");
         }
 
         if (nombre == null || nombre.isEmpty()) {
             throw new MiException("El nombre no puede ser nulo ni estar vacio");
+        }
+        
+        if (mail == null || mail.isEmpty()) {
+            throw new MiException("El mail no puede ser nulo ni estar vacio");
         }
 
         if (password == null || password.isEmpty() || password.length() <= 5) {
@@ -98,10 +103,10 @@ public class UsuarioServicio implements UserDetailsService {
     //Recibe un usario para que podamos autenticar, valido a través del nombre. 
     //Se puede validar a través de un email
     @Override
-    public UserDetails loadUserByUsername(String nombre) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
         Usuario usuario = usuarioRepositorio
-                .buscarPorNombre(nombre);
+                .buscarPorMail(mail);
 
         if (usuario != null) {
 
@@ -120,7 +125,7 @@ public class UsuarioServicio implements UserDetailsService {
 
             //Lo transformamos es un usario del dominio Spring
             //El constructor de user nos pide un username, una contraseña y una lista de permisos
-            return new User(usuario.getNombre(), usuario.getPassword(), permisos);
+            return new User(usuario.getMail(), usuario.getPassword(), permisos);
 
         } else {
 

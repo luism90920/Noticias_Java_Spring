@@ -31,12 +31,13 @@ public class PeriodistaControlador {
     @PostMapping("/registro")
     public String registro(@RequestParam(required = false) Integer dni,
             @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String mail,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String password2,
             ModelMap modelo) {
 
         try {
-            periodistaServicio.crearPeriodista(dni, nombre, password, password2);
+            periodistaServicio.crearPeriodista(dni, nombre, mail, password, password2);
             
             modelo.put("exito", "El periodista fue registrado correctamente");
             return "panel.html";
@@ -68,12 +69,13 @@ public class PeriodistaControlador {
     @PostMapping("/modificar/{dni}")
     public String modificar(@PathVariable Integer dni, 
             String nombre, 
+            String mail,
             String password,
             String password2,
             ModelMap modelo) {
 
         try {
-            periodistaServicio.modificarPeriodista(dni, nombre, password, password2);
+            periodistaServicio.modificarPeriodista(dni, nombre, mail, password, password2);
             return "redirect:../lista";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());

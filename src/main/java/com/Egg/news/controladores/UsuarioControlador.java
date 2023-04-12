@@ -44,12 +44,13 @@ public class UsuarioControlador {
     @PostMapping("/modificar/{dni}")
     public String modificar(@PathVariable Integer dni, 
             String nombre, 
+            String mail,
             String password,
             String password2,
             ModelMap modelo) {
 
         try {
-            usuarioServicio.modificarUsuario(dni, nombre, password, password2);
+            usuarioServicio.modificarUsuario(dni, nombre, mail, password, password2);
             return "redirect:../lista";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
